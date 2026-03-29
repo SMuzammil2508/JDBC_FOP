@@ -49,7 +49,7 @@ public class main {
 
             // CREATING TABLE IN DATABASE
 
-            String table_query = "CREATE TABLE IF NOT EXISTS students ( id INT PRIMARY KEY NOT NULL, name VARCHAR(50) NOT NULL , age INT NOT NULL , roll INT NOT NULL)";
+            String table_query = "CREATE TABLE IF NOT EXISTS students ( id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(50) NOT NULL , age INT NOT NULL , roll INT NOT NULL)";
             st.executeUpdate(table_query);
 
             // =================================================================================================================================
@@ -111,7 +111,7 @@ public class main {
             String n1 = sc.next();
             System.out.println("Roll NO :");
             int r1 = sc.nextInt();
-            String delete_query = "DELETE FROM students WHERE name = ? and roll = ? ";
+            String delete_query = "DELETE FROM students WHERE UPPER(name) = UPPER(?) and roll = ? ";
 
             PreparedStatement ps1 = conn.prepareStatement(delete_query);
             ps1.setString(1, n1.toUpperCase());
@@ -122,6 +122,12 @@ public class main {
             } else {
                 System.out.println("error in deleting the student");
             }
+
+            // closing the objects
+            ps1.close();
+            st.close();
+            conn.close();
+            sc.close();
 
         } catch (SQLException e) {
             System.out.println("error : " + e.getMessage());
