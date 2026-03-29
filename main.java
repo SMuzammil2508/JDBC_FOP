@@ -72,45 +72,56 @@ public class main {
 
             // TABLE TAKING INPUT FROM USER AND USING BATCH PROCESSING
 
-            String query_insert = "INSERT INTO students(name,age,roll) VALUES(?,?,?)";
-            PreparedStatement ps = conn.prepareStatement(query_insert);
-            while (true) {
+            // String query_insert = "INSERT INTO students(name,age,roll) VALUES(?,?,?)";
+            // PreparedStatement ps = conn.prepareStatement(query_insert);
+            // while (true) {
 
-                System.out.println("enter name :");
-                String s = sc.next();
-                System.out.println("enter age :");
-                int a = sc.nextInt();
-                System.out.println("enter roll :");
-                int r = sc.nextInt();
-                System.out.print("do you want to add more (Y/N) :");
-                String choice = sc.next();
+            // System.out.println("enter name :");
+            // String s = sc.next();
+            // System.out.println("enter age :");
+            // int a = sc.nextInt();
+            // System.out.println("enter roll :");
+            // int r = sc.nextInt();
+            // System.out.print("do you want to add more (Y/N) :");
+            // String choice = sc.next();
 
-                ps.setString(1, s);
-                ps.setInt(2, a);
-                ps.setInt(3, r);
-                ps.addBatch();
+            // ps.setString(1, s);
+            // ps.setInt(2, a);
+            // ps.setInt(3, r);
+            // ps.addBatch();
 
-                if (choice.toUpperCase().equals("N")) {
-                    break;
-                }
-            }
-            // BATCH PROCESSING
-            int[] batchResults = ps.executeBatch();
-            for (int i = 0; i < batchResults.length; i++) {
-                System.out.printf("Row %d: %d changes made%n", i + 1, batchResults[i]);
-            }
+            // if (choice.toUpperCase().equals("N")) {
+            // break;
+            // }
+            // }
+            // // BATCH PROCESSING
+            // int[] batchResults = ps.executeBatch();
+            // for (int i = 0; i < batchResults.length; i++) {
+            // System.out.printf("Row %d: %d changes made%n", i + 1, batchResults[i]);
+            // }
 
             // ===================================================================================================================================
 
             // DELETING VALUES IN DATABASE USING PREPARED STATEMENTS
 
-            // String delete_query = " DELETE FROM students WHERE id = ?";
-            // PreparedStatement ps1 = conn.prepareStatement(delete_query);
-            // ps1.setInt(1, 1);
-            // int a2 = ps1.executeUpdate();
-            // if (a2 != 0) {
-            // System.out.println("value added in students database");
-            // }
+            // String delete_query = " DELETE FROM students WHERE id = ?"; DELETING USING
+            // THE UNIQUE ID VALUE
+            System.out.print("Please enter the name and roll no. of the student you wish to delete from database :-\n");
+            System.out.println("Name :");
+            String n1 = sc.next();
+            System.out.println("Roll NO :");
+            int r1 = sc.nextInt();
+            String delete_query = "DELETE FROM students WHERE name = ? and roll = ? ";
+
+            PreparedStatement ps1 = conn.prepareStatement(delete_query);
+            ps1.setString(1, n1.toUpperCase());
+            ps1.setInt(2, r1);
+            int a2 = ps1.executeUpdate();
+            if (a2 != 0) {
+                System.out.println("Student Deleted from database");
+            } else {
+                System.out.println("error in deleting the student");
+            }
 
         } catch (SQLException e) {
             System.out.println("error : " + e.getMessage());
