@@ -42,6 +42,23 @@ public class main {
             // STEP 6 : SWITCH TO THE DATABASE CREATED
             st.executeUpdate("USE " + db_name);
 
+            // =================================================================================================================================
+
+            // CREATING TABLE IN DATABASE
+
+            String table_query = "CREATE TABLE IF NOT EXISTS students ( id INT PRIMARY KEY NOT NULL, name VARCHAR(50) NOT NULL , age INT NOT NULL , roll INT NOT NULL)";
+            st.executeUpdate(table_query);
+
+            // ADDING DUMMY VALUES IN DATA BASE USING PREPARED STATEMENT
+            String insert_query = "INSERT INTO students(name,age,roll) VALUES(?,?,?)";
+            PreparedStatement ps = conn.prepareStatement(insert_query);
+            ps.setString(1, "Pranav");
+            ps.setInt(2, 19);
+            ps.setInt(3, 54);
+            int a1 = ps.executeUpdate();
+            if (a1 != 0) {
+                System.out.println("value added in students database");
+            }
         } catch (SQLException e) {
             System.out.println("error : " + e.getMessage());
 
